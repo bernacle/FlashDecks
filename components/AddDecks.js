@@ -1,27 +1,45 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import { receiveDecks, addDeck } from '../actions'
+import { View, StyleSheet, Text, TextInput } from 'react-native'
+import { receiveDecks, insertDeck } from '../actions'
 import { connect } from 'react-redux'
 import { red, white} from '../utils/colors'
+import SubmitButton from './SubmitButton'
 
 class AddDecks extends Component {
 
+  state = {
+    text: ''
+  }
+
+  submit = () => {
+
+    const {title} = this.state
+
+    let deck = {}
+    deck.id = new Date().getTime().toString() + Math.floor(Math.random()*1000000);
+    deck.title = title
+    deck.questios = []
+    this.props.dispatch(insertDeck(deck))
+  }
 
 
   render() {
     const { decks } = this.props
     return(
-      <View style={styles.container}><Text>Hi</Text></View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+          placeholder="Deck Title"
+        />
+        <SubmitButton onPress={this.submit} title='SUBMIT'></SubmitButton>
+      </View>
     )
   }
 }
 
 
-function mapStateToProps(decks){
-  return {
-    decks
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -66,4 +84,9 @@ const styles = StyleSheet.create({
   }
 })
 
+function mapStateToProps(decks){
+  return {
+    decks
+  }
+}
 export default connect (mapStateToProps)(AddDecks)

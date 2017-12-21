@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { red, white } from '../utils/colors'
+import SubmitButton from './SubmitButton'
 
 
 class DeckList extends Component {
@@ -16,11 +17,7 @@ class DeckList extends Component {
       return (
         <View style={styles.container}>
           <Text>No decks to show, please add some</Text>
-          <TouchableOpacity
-            style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
-            onPress={() => navigation.navigate('AddDecks')}>
-              <Text style={styles.submitBtnText}>ADD DECKS</Text>
-          </TouchableOpacity>
+          <SubmitButton onPress={() => navigation.navigate('AddDecks')} title="ADD DECK"></SubmitButton>
         </View>
       )
     } else {
