@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TextInput } from 'react-native'
-import { receiveDecks, insertDeck } from '../actions'
+import { View, StyleSheet, Text, TextInput, AsyncStorage } from 'react-native'
+import { receiveDecks, addDeck } from '../actions'
 import { connect } from 'react-redux'
 import { red, white} from '../utils/colors'
 import SubmitButton from './SubmitButton'
+import { addCardToDeck } from '../utils/api'
+import { DECK_STORAGE_KEY } from '../utils/decks'
 
 class AddDecks extends Component {
 
   state = {
-    text: ''
+    title: ''
   }
 
   submit = () => {
@@ -18,8 +20,9 @@ class AddDecks extends Component {
     let deck = {}
     deck.id = new Date().getTime().toString() + Math.floor(Math.random()*1000000);
     deck.title = title
-    deck.questios = []
-    this.props.dispatch(insertDeck(deck))
+    deck.questions = []
+    this.props.dispatch(addDeck(deck))
+    addCardToDeck(deck, this.props.decks)
   }
 
 
@@ -29,8 +32,8 @@ class AddDecks extends Component {
       <View style={styles.container}>
         <TextInput
           style={styles.textInput}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
+          onChangeText={(title) => this.setState({title})}
+          value={this.state.title}
           placeholder="Deck Title"
         />
         <SubmitButton onPress={this.submit} title='SUBMIT'></SubmitButton>

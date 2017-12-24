@@ -12,10 +12,15 @@ export const addDeck = deck =>({
 
 export const insertDeck = (deck) => dispatch => (
    DeckAPI
-      .setDecks((deck) => console.log(deck))
+      .addCardToDeck((deck) => dispatch(addDeck(deck)))
 )
 
 export const receiveDecks = decks => ({
   type: RECEIVE_DECKS,
   decks
 })
+
+export const fetchDecks = (decks) => dispatch => (
+   DeckAPI
+      .fetchDeckResults((decks) => dispatch(receiveDecks(decks)))
+)

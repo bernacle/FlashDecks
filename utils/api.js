@@ -1,15 +1,15 @@
 import { AsyncStorage } from 'react-native'
-import { DECK_STORAGE_KEY, storeDecks } from './decks'
+import { DECK_STORAGE_KEY, formatDeckResults } from './decks'
 
 
-export const setDecks = (deck) =>
-  AsyncStorage.getItem(DECK_STORAGE_KEY)
-    .then((results) => {
-      storeDecks(results, deck)
-})
+export function fetchDeckResults () {
+  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then(formatDeckResults)
+}
 
-export function addCardToDeck({ card, title }) {
-  return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-    [title]: card,
-  }))
+export function addCardToDeck(deck, decks) {
+
+  decks.push(deck)
+  AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
+
 }

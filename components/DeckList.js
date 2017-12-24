@@ -1,32 +1,46 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Platform, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { red, white } from '../utils/colors'
 import SubmitButton from './SubmitButton'
+import { fetchDeckResults } from '../utils/api'
 
 
 class DeckList extends Component {
 
+  componentDidMount(){
+    fetchDeckResults()
+      .then((decks) => this.props.dispatch(receiveDecks(decks)))
+  }
+
+  _renderItem = ({item}) => (
+    <TouchableOpacity>
+              <View key={item.id}><Text>{item.title}</Text></View>
+    </TouchableOpacity>
+  )
 
 
   render() {
     const { decks, navigation } = this.props
 
-    if (decks.title === undefined){
-      return (
-        <View style={styles.container}>
-          <Text>No decks to show, please add some</Text>
-          <SubmitButton onPress={() => navigation.navigate('AddDecks')} title="ADD DECK"></SubmitButton>
-        </View>
-      )
-    } else {
-      return(
-        <View style={styles.container}>
-          <Text>{decks}</Text>
-        </View>
-      )
-    }
+      if (decks.length > 0){
+        return (
+          <View style={styles.container}>
+            <FlatList
+              data={this.props.decks}
+              renderItem={this._renderItem}
+            />
+          </View>
+        )
+      } else {
+        return (
+          <View style={styles.container}>
+            <Text>No decks to show, please add some</Text>
+            <SubmitButton onPress={() => navigation.navigate('AddDecks')} title="ADD DECK"></SubmitButton>
+          </View>
+        )
+      }
   }
 }
 

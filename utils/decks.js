@@ -2,22 +2,16 @@ import { AsyncStorage } from 'react-native'
 
 export const DECK_STORAGE_KEY = 'Flashcards:deck'
 
-export function storeDecks (results, deck) {
+export function formatDeckResults (results) {
   return results === null
-    ? setDeckObject(deck)
-    : addDeckToObject(deck)
+    ? setDeckObject()
+    : setDeckObject()
 }
 
-function setDeckObject(deck){
-  const decks = []
-  decks.push(deck)
+function setDeckObject(){
+  AsyncStorage.clear()
+  const decks = new Array()
   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
 
-  return deck
-}
-
-function addDeckToObject(deck){
-
-   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(deck))
-
+  return decks
 }
