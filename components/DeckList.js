@@ -16,9 +16,11 @@ class DeckList extends Component {
 
   _renderItem = ({item}) => (
     <TouchableOpacity>
-              <View key={item.id}><Text>{item.title}</Text></View>
+              <View><Text>{item.title}</Text></View>
     </TouchableOpacity>
   )
+
+  keyExtractor = (item, index) => item.id
 
 
   render() {
@@ -30,6 +32,7 @@ class DeckList extends Component {
             <FlatList
               data={this.props.decks}
               renderItem={this._renderItem}
+              keyExtractor={this.keyExtractor}
             />
           </View>
         )

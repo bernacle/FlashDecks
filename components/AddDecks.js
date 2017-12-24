@@ -4,7 +4,7 @@ import { receiveDecks, addDeck } from '../actions'
 import { connect } from 'react-redux'
 import { red, white} from '../utils/colors'
 import SubmitButton from './SubmitButton'
-import { addCardToDeck } from '../utils/api'
+import { addCardToDeck, fetchDeckResults } from '../utils/api'
 import { DECK_STORAGE_KEY } from '../utils/decks'
 
 class AddDecks extends Component {
@@ -23,8 +23,13 @@ class AddDecks extends Component {
     deck.questions = []
     this.props.dispatch(addDeck(deck))
     addCardToDeck(deck, this.props.decks)
+
   }
 
+  view = () => {
+    fetchDeckResults()
+      .then((decks) => console.log(decks))
+  }
 
   render() {
     const { decks } = this.props
@@ -37,6 +42,7 @@ class AddDecks extends Component {
           placeholder="Deck Title"
         />
         <SubmitButton onPress={this.submit} title='SUBMIT'></SubmitButton>
+        <SubmitButton onPress={this.view} title='View'></SubmitButton>
       </View>
     )
   }
