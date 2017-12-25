@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import store from './store/store'
 import AddDecks from './components/AddDecks'
 import DeckList from './components/DeckList'
+import DeckDetail from './components/DeckDetail'
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation'
 import { white, purple } from './utils/colors'
 
@@ -18,6 +19,12 @@ const MainNavigator = StackNavigator({
     screen: AddDecks,
     navigationOptions: {
       title: 'AddDecks'
+    }
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      title: 'DeckDetail'
     }
   }
 })

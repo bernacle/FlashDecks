@@ -27,8 +27,7 @@ class AddDecks extends Component {
   }
 
   view = () => {
-    fetchDeckResults()
-      .then((decks) => console.log(decks))
+    console.log(this.props.decks)
   }
 
   render() {
@@ -42,7 +41,6 @@ class AddDecks extends Component {
           placeholder="Deck Title"
         />
         <SubmitButton onPress={this.submit} title='SUBMIT'></SubmitButton>
-        <SubmitButton onPress={this.view} title='View'></SubmitButton>
       </View>
     )
   }
@@ -61,7 +59,8 @@ const styles = StyleSheet.create({
     width: 300,
     borderColor: 'gray',
     borderWidth: 1,
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'white',
   },
   iosSubmitBtn: {
     width: 300,

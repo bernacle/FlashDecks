@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { red, white } from '../utils/colors'
 import SubmitButton from './SubmitButton'
+import DeckCard from './DeckCard'
 import { fetchDeckResults } from '../utils/api'
 
 
@@ -15,9 +16,14 @@ class DeckList extends Component {
   }
 
   _renderItem = ({item}) => (
-    <TouchableOpacity>
-              <View><Text>{item.title}</Text></View>
-    </TouchableOpacity>
+    <View style={styles.item}>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate(
+        'DeckDetail',
+        {deck: item}
+      )}>
+              <DeckCard deck={item}/>
+      </TouchableOpacity>
+    </View>
   )
 
   keyExtractor = (item, index) => item.id
@@ -34,6 +40,7 @@ class DeckList extends Component {
               renderItem={this._renderItem}
               keyExtractor={this.keyExtractor}
             />
+            <SubmitButton onPress={() => navigation.navigate('AddDecks')} title="ADD DECK"></SubmitButton>
           </View>
         )
       } else {
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'stretch',
   },
   textInput: {
     height: 40,
@@ -89,6 +96,22 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 22,
     textAlign: 'center',
+  },
+  item: {
+    backgroundColor: white,
+    borderRadius: Platform.OS === 'ios' ? 16 : 2,
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: 'center',
+    shadowRadius: 3,
+    shadowOpacity: 8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    }
   }
 })
 

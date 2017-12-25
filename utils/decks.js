@@ -10,7 +10,7 @@ export function formatDeckResults (results) {
 
 function setDeckObject(){
   AsyncStorage.clear()
-  
+
   const decks = new Array()
   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
 
