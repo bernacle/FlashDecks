@@ -1,18 +1,19 @@
-import { ADD_DECK, RECEIVE_DECKS } from '../actions'
+import { RECEIVE_DECK } from '../actions'
 
-const initialState = []
+const initialState = {
+  id: '',
+  title: '',
+  questions: []
+}
 
-const decks = (state = initialState, action) => {
+const deck = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_DECK:
-      return state.concat(action.deck)
-
-    case RECEIVE_DECKS:
-      return action.decks
+    case RECEIVE_DECK:
+      return action.deck
 
     default:
       return state
   }
 }
 
-export default decks
+export default deck

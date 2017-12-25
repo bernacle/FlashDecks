@@ -1,18 +1,11 @@
-import { ADD_DECK, RECEIVE_DECKS } from '../actions'
+import { combineReducers } from 'redux'
+import decks from './decks'
+import deck from './deck'
 
-const initialState = []
 
-const decks = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_DECK:
-      return state.concat(action.deck)
+const rootReducer = combineReducers({
+    decks,
+    deck
+});
 
-    case RECEIVE_DECKS:
-      return action.decks
-
-    default:
-      return state
-  }
-}
-
-export default decks
+export default rootReducer
