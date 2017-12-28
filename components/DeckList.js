@@ -46,7 +46,7 @@ class DeckList extends Component {
       } else {
         return (
           <View style={styles.container}>
-            <Text>No decks to show, please add some</Text>
+            <Text style={{textAlign: 'center'}}>No decks to show, please add some</Text>
             <SubmitButton onPress={() => navigation.navigate('AddDecks')} title="ADD DECK"></SubmitButton>
           </View>
         )

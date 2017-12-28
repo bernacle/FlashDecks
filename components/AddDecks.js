@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TextInput, AsyncStorage } from 'react-native'
+import { View, StyleSheet, Text, TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { receiveDecks, addDeck } from '../actions'
 import { connect } from 'react-redux'
 import { red, white} from '../utils/colors'
 import SubmitButton from './SubmitButton'
-import { addCardToDeck, fetchDeckResults } from '../utils/api'
+import { storeDecks, fetchDeckResults } from '../utils/api'
 import { DECK_STORAGE_KEY } from '../utils/decks'
 
 class AddDecks extends Component {
@@ -15,14 +15,16 @@ class AddDecks extends Component {
 
   submit = () => {
 
-    const {title} = this.state
+    const { title } = this.state
+    const { decks } = this.props
 
     let deck = {}
+    // UID
     deck.id = new Date().getTime().toString() + Math.floor(Math.random()*1000000);
     deck.title = title
     deck.questions = []
     this.props.dispatch(addDeck(deck))
-    addCardToDeck(deck, this.props.decks)
+    storeDecks(deck, decks)
 
   }
 
@@ -33,7 +35,7 @@ class AddDecks extends Component {
   render() {
     const { decks } = this.props
     return(
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <TextInput
           style={styles.textInput}
           onChangeText={(title) => this.setState({title})}
@@ -41,7 +43,7 @@ class AddDecks extends Component {
           placeholder="Deck Title"
         />
         <SubmitButton onPress={this.submit} title='SUBMIT'></SubmitButton>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -97,4 +99,5 @@ function mapStateToProps(state){
     decks: state.decks
   }
 }
+
 export default connect (mapStateToProps)(AddDecks)

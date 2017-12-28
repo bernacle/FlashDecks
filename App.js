@@ -5,6 +5,7 @@ import store from './store/store'
 import AddDecks from './components/AddDecks'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
+import AddCard from './components/AddCard'
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation'
 import { white, purple } from './utils/colors'
 
@@ -25,6 +26,12 @@ const MainNavigator = StackNavigator({
     screen: DeckDetail,
     navigationOptions: {
       title: 'DeckDetail'
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      title: 'AddCard'
     }
   }
 })

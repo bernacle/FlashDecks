@@ -1,16 +1,35 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { white } from '../utils/colors'
+import { white, gray, red } from '../utils/colors'
+import { receiveDeck } from '../actions'
+import { DeckCard } from './DeckCard'
+import SubmitButton from './SubmitButton'
 
 class DeckDetail extends Component {
 
+  state = {
+    deck: {}
+  }
+
   render() {
     const { deck } = this.props.navigation.state.params
+    const { navigation } = this.props
 
     return(
       <View style={styles.container}>
-        <Text>{deck.title}</Text>
+          <View>
+            <Text style={{fontSize: 20}}>
+              {deck.title}
+            </Text>
+            <Text style={{fontSize: 16, color: gray}}>
+              {deck.questions.length} cards
+            </Text>
+          </View>
+          <View>
+            <SubmitButton onPress={() => navigation.navigate('AddCard', {deck: deck})} title="ADD CARD"></SubmitButton>
+            <SubmitButton onPress={this.submit} title='TEST YOUR MIGHT'></SubmitButton>
+          </View>
       </View>
     )
   }
@@ -19,16 +38,43 @@ class DeckDetail extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: white,
-    padding: 15,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  iosSubmitBtn: {
+    width: 300,
+    backgroundColor: red,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 10,
+  },
+  androidSubmitBtn: {
+    width: 300,
+    backgroundColor: red,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
   }
 })
 
-function mapStateToProps({ navigation }) {
-  const { deckId } = navigation.state.params
-
+function mapStateToProps(state){
   return {
-    deckId
+    deck: state.deck
   }
 }
 

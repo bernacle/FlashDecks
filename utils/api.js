@@ -7,7 +7,7 @@ export function fetchDeckResults () {
     .then(formatDeckResults)
 }
 
-export function addCardToDeck(deck, decks) {
+export function storeDecks(deck, decks) {
 
   decks.push(deck)
   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))

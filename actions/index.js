@@ -3,6 +3,9 @@ import * as DeckAPI from '../utils/api'
 
 export const ADD_DECK = 'ADD_DECK'
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
+export const RECEIVE_DECK = 'RECEIVE_DECK'
+export const ADD_QUESTIONS = 'ADD_QUESTIONS'
+export const UPDATE_DECKS = 'UPDATE_DECKS'
 
 
 export const addDeck = deck =>({
@@ -24,3 +27,18 @@ export const fetchDecks = (decks) => dispatch => (
    DeckAPI
       .fetchDeckResults((decks) => dispatch(receiveDecks(decks)))
 )
+
+export const receiveDeck = deck => ({
+  type: RECEIVE_DECK,
+  deck
+})
+
+export const addQuestionsToDeck = deck => ({
+  type: ADD_QUESTIONS,
+  deck
+})
+
+export const updateDecks = deck => ({
+  type: UPDATE_DECKS,
+  deck
+})
