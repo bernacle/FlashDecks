@@ -8,6 +8,7 @@ export function formatDeckResults (results) {
     : JSON.parse(results)
 }
 
+
 function setDeckObject(){
   AsyncStorage.clear()
 

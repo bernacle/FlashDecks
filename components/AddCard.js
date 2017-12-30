@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import { white, gray, red } from '../utils/colors'
-import { receiveDeck, updateDecks } from '../actions'
+import { receiveDeck, updateDecks, updateQuestions } from '../actions'
 import { DeckCard } from './DeckCard'
-import { storeDecks } from '../utils/api'
+import { storeDecks, storeCards } from '../utils/api'
 import SubmitButton from './SubmitButton'
 
 class AddCard extends Component {
@@ -25,7 +25,12 @@ class AddCard extends Component {
     deck.questions.push(card)
     this.props.dispatch(receiveDeck(deck))
     this.props.dispatch(updateDecks(deck))
-    storeDecks(deck, decks)
+    this.props.dispatch(updateQuestions(deck.questions))
+    storeCards(decks)
+    this.setState({
+      question: '',
+      answer: ''
+    })
   }
 
   render() {

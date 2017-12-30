@@ -6,6 +6,7 @@ export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const RECEIVE_DECK = 'RECEIVE_DECK'
 export const ADD_QUESTIONS = 'ADD_QUESTIONS'
 export const UPDATE_DECKS = 'UPDATE_DECKS'
+export const UPDATE_QUESTIONS = 'UPDATE_QUESTIONS'
 
 
 export const addDeck = deck =>({
@@ -41,4 +42,9 @@ export const addQuestionsToDeck = deck => ({
 export const updateDecks = deck => ({
   type: UPDATE_DECKS,
   deck
+})
+
+export const updateQuestions= questions => ({
+  type: UPDATE_QUESTIONS,
+  questions
 })

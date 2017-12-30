@@ -24,6 +24,7 @@ class AddDecks extends Component {
     deck.title = title
     deck.questions = []
     this.props.dispatch(addDeck(deck))
+    console.log(decks)
     storeDecks(deck, decks)
 
   }
@@ -54,7 +55,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   textInput: {
     height: 40,
@@ -63,6 +65,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: 'center',
     backgroundColor: 'white',
+    shadowRadius: 4,
+    shadowOpacity: 1,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    }
   },
   iosSubmitBtn: {
     width: 300,

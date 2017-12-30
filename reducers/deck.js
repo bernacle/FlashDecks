@@ -1,4 +1,4 @@
-import { RECEIVE_DECK, ADD_QUESTIONS } from '../actions'
+import { RECEIVE_DECK, ADD_QUESTIONS, UPDATE_QUESTIONS } from '../actions'
 
 const initialState = {
   id: '',
@@ -13,6 +13,12 @@ const deck = (state = initialState, action) => {
 
     case ADD_QUESTIONS:
       return state.questions.concat(action.deck)
+
+    case UPDATE_QUESTIONS:
+      return {
+        ...state,
+        questions: action.questions
+      }
 
     default:
       return state

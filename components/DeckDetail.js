@@ -12,17 +12,20 @@ class DeckDetail extends Component {
     deck: {}
   }
 
-  render() {
+  componentWillMount(){
     const { deck } = this.props.navigation.state.params
-    const { navigation } = this.props
+    this.props.dispatch(receiveDeck(deck))
+  }
 
+  render() {
+    const { deck, navigation } = this.props
     return(
       <View style={styles.container}>
           <View>
-            <Text style={{fontSize: 20}}>
+            <Text style={{fontSize: 20, textAlign: 'center'}}>
               {deck.title}
             </Text>
-            <Text style={{fontSize: 16, color: gray}}>
+            <Text style={{fontSize: 16, color: gray, textAlign: 'center'}}>
               {deck.questions.length} cards
             </Text>
           </View>
@@ -79,4 +82,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect()(DeckDetail)
+export default connect(mapStateToProps)(DeckDetail)
