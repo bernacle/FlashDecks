@@ -31,7 +31,9 @@ class DeckDetail extends Component {
           </View>
           <View>
             <SubmitButton onPress={() => navigation.navigate('AddCard', {deck: deck})} title="ADD CARD"></SubmitButton>
-            <SubmitButton onPress={() => navigation.navigate('Quiz', {deck: deck})} title='TEST YOUR MIGHT'></SubmitButton>
+            {deck.questions.length > 0 &&
+              <SubmitButton onPress={() => navigation.navigate('Quiz', {deck: deck})} title='TEST YOUR MIGHT'></SubmitButton>
+            }
           </View>
       </View>
     )

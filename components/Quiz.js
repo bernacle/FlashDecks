@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import { blue, white, red } from '../utils/colors'
 import CorrectButton from './CorrectButton'
 import IncorrectButton from './IncorrectButton'
+import SubmitButton from './SubmitButton'
 import { receiveDeck } from '../actions'
 import DeckCard from './DeckCard'
 import { fetchDeckResults } from '../utils/api'
-import { setLocalNotification, clearLocalNotifications } from './utils/notifications'
+import { setLocalNotification, clearLocalNotifications } from '../utils/notifications'
 
 
 class Quiz extends Component {
@@ -19,11 +20,14 @@ class Quiz extends Component {
     index: 0
   }
 
-  componentWillMount(){
+
+  componentDidMount(){
     const { deck } = this.props.navigation.state.params
     this.props.dispatch(receiveDeck(deck))
-    clearLocalNotifications()
-      .then(setLocalNotification)
+    // Here i implemented the Local notification just like in the video class, but
+    // they didnt work, can you help me??
+    // clearLocalNotifications()
+    //   .then(setLocalNotification)
   }
 
   showAnswer = () => {
@@ -34,21 +38,39 @@ class Quiz extends Component {
     this.setState({showAnswer: false})
   }
 
-  score = (option) => {
+
+  quiz = (option) => {
     const { index, score } = this.state
     const { deck } = this.props
 
+
     if (option === 'correct'){
-      this.setState({score: this.state.score + 1})
+      this.setState({score: score + 1})
     }
 
     if(index === (deck.questions.length - 1)){
-      let finalScore = ((score/index) * 100)
-      this.setState({showScore: true, score: finalScore})
+      this.setState({showScore: true})
 
     } else {
       this.setState({showAnswer: false, index: this.state.index + 1})
     }
+
+  }
+
+  goBack = () => {
+    const { goBack }= this.props.navigation
+
+    goBack()
+  }
+
+
+  restartQuiz = () => {
+    this.setState({
+      showAnswer: false,
+      showScore: false,
+      score: 0,
+      index: 0  
+    })
 
   }
 
@@ -60,7 +82,9 @@ class Quiz extends Component {
       <View style={styles.container}>
           {showScore
             ? <View style={styles.center}>
-                <Text style={{fontSize: 40}}>Score: {score} %</Text>
+                <Text style={{fontSize: 40}}>Score: {score}/{deck.questions.length}</Text>
+                <SubmitButton onPress={this.restartQuiz} title='Restart Quiz'></SubmitButton>
+                <SubmitButton onPress={this.goBack} title='Back to Deck'></SubmitButton>
               </View>
 
             : <View style={styles.container}>
@@ -71,14 +95,14 @@ class Quiz extends Component {
                   {showAnswer
                     ? <View>
                         <Text style={styles.questionText}>{deck.questions[index].answer}</Text>
-                        <Button color={red} onPress={this.showQuestion} title="Question"></Button>
-                        <CorrectButton onPress={() => {this.score("correct")}}></CorrectButton>
-                        <IncorrectButton onPress={() => {this.score("incorrect")}}></IncorrectButton>
+                        <Button color={red} onPress={this.showQuestion} title="Show Question"></Button>
+                        <CorrectButton onPress={() => {this.quiz("correct")}}></CorrectButton>
+                        <IncorrectButton onPress={() => {this.quiz("incorrect")}}></IncorrectButton>
                       </View>
 
                     : <View>
                         <Text style={styles.questionText}>{deck.questions[index].question}</Text>
-                        <Button color={red} onPress={this.showAnswer} title="Answer"></Button>
+                        <Button color={red} onPress={this.showAnswer} title="Show Answer"></Button>
                       </View>
                   }
                 </View>

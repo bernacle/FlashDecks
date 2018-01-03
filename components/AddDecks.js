@@ -6,6 +6,7 @@ import { red, white} from '../utils/colors'
 import SubmitButton from './SubmitButton'
 import { storeDecks, fetchDeckResults } from '../utils/api'
 import { DECK_STORAGE_KEY } from '../utils/decks'
+import { setLocalNotification } from '../utils/notifications'
 
 class AddDecks extends Component {
 
@@ -17,6 +18,7 @@ class AddDecks extends Component {
 
     const { title } = this.state
     const { decks } = this.props
+    const { navigate }= this.props.navigation
 
     let deck = {}
     // UID
@@ -24,13 +26,8 @@ class AddDecks extends Component {
     deck.title = title
     deck.questions = []
     this.props.dispatch(addDeck(deck))
-    console.log(decks)
     storeDecks(deck, decks)
-
-  }
-
-  view = () => {
-    console.log(this.props.decks)
+    navigate('DeckDetail', {deck: deck})
   }
 
   render() {
