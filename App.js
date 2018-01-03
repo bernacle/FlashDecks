@@ -8,7 +8,8 @@ import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation'
-import { white, purple } from './utils/colors'
+import { white } from './utils/colors'
+import { setLocalNotification } from './utils/notifications'
 
 const MainNavigator = StackNavigator({
   DeckList: {
@@ -45,6 +46,9 @@ const MainNavigator = StackNavigator({
 
 
 export default class App extends React.Component {
+  componentDidMount(){
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={store}>

@@ -7,6 +7,7 @@ import IncorrectButton from './IncorrectButton'
 import { receiveDeck } from '../actions'
 import DeckCard from './DeckCard'
 import { fetchDeckResults } from '../utils/api'
+import { setLocalNotification, clearLocalNotifications } from './utils/notifications'
 
 
 class Quiz extends Component {
@@ -21,6 +22,8 @@ class Quiz extends Component {
   componentWillMount(){
     const { deck } = this.props.navigation.state.params
     this.props.dispatch(receiveDeck(deck))
+    clearLocalNotifications()
+      .then(setLocalNotification)
   }
 
   showAnswer = () => {
